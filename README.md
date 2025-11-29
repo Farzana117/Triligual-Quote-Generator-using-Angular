@@ -28,3 +28,5 @@ Frontend
 
 **Deployment**
  -> Deployed using GitHub Pages
+
+ Deployment Link: https://farzana117.github.io/Triligual-Quote-Generator-using-Angular/
