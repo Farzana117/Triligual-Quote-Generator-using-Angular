@@ -1,0 +1,67 @@
+<div class="container">
+  <header class="header">
+    <div>
+      <h1>{{ title() }}</h1>
+      <p class="subtitle">{{ subtitle() }}</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="quote-section" *ngIf="quote() as q">
+
+  <!-- 🔽 NEW: filter dropdown -->
+  <div class="filters">
+    <label>
+      <span>Category:</span>
+      <select
+        [value]="categoryFilter()"
+        (change)="onCategoryChange($any($event.target).value)"
+      >
+        <option
+          *ngFor="let c of categories"
+          [value]="c.code"
+        >
+          {{ categoryLabel(c.labelKey) }}
+        </option>
+      </select>
+    </label>
+  </div>
+      <div class="quote-card">
+        <p class="quote-text" [attr.lang]="lang()">
+          “{{ q.text[lang()] }}”
+        </p>
+        <p class="quote-author">– {{ q.author }}</p>
+        <span class="quote-tag">
+          {{ q.category | titlecase }}
+        </span>
+
+        <div class="actions">
+          <button (click)="newRandomQuote()">
+            {{ newQuoteLabel() }}
+          </button>
+          <button (click)="addFavourite()">
+            {{ saveFavLabel() }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="favourites-section">
+      <h2>{{ favouritesLabel() }}</h2>
+
+      <p *ngIf="!favourites().length" class="empty-text">
+        {{ noFavouritesText() }}
+      </p>
+
+      <ul *ngIf="favourites().length" class="favourites-list">
+        <li *ngFor="let f of favourites()" class="favourite-item">
+            <p [attr.lang]="lang()">“{{ f.text[lang()] }}”</p>
+            <span class="fav-author">– {{ f.author }}</span>
+            <button class="remove-btn" (click)="removeFavourite(f.id)">
+                Remove
+            </button>
+        </li>
+      </ul>
+    </section>
+  </main>
+</div>
